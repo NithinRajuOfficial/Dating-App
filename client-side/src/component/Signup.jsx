@@ -6,9 +6,9 @@ import InputTag from "../utils/InputTag";
 import { signupInputData } from "../constants";
 import { signupValidationSchema } from "../utils/validation";
 import signupApi from "../services/signupApi";
+import handleGoogleAuthentication from "../services/googleAuth";
 
 export default function Signup() {
-  const index = nanoid();
   return (
     <section className="flex justify-center h-[100vh] p-5 sm:p-20">
       <div
@@ -35,7 +35,7 @@ export default function Signup() {
             </div>
 
             {signupInputData.map((elm) => (
-              <InputTag key={index} data={elm} />
+              <InputTag key={nanoid()} data={elm} />
             ))}
             <div className="flex gap-8 pt-4 pb-2">
               <Button
@@ -67,6 +67,7 @@ export default function Signup() {
               variant="outlined"
               color="blue-gray"
               className="flex items-center gap-3 hover:bg-gray-100 hover:scale-110 duration-300"
+              onClick={handleGoogleAuthentication}
             >
               <img
                 src="https://docs.material-tailwind.com/icons/google.svg"
