@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
   {
+    googleId: { type: String, unique: true,  sparse: true  },
     userName: {
       type: String,
       required: true,
@@ -19,12 +20,13 @@ const userSchema = new Schema(
     contactNumber: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: function() {
+        return !this.googleId;
+      },
       trim: true,
     },
   },
@@ -33,12 +35,10 @@ const userSchema = new Schema(
 
 // user password encrypting process
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
-  
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
-  });
-  
+  if (!this.isModified("password")) return next();
 
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
-  export const User = model("User", userSchema);
+export const User = model("User", userSchema);
