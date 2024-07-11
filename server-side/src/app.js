@@ -40,4 +40,13 @@ import authRouter from "./routes/authRouter.js";
 app.use("/api/user/", userRouter);
 app.use("/api/auth/", authRouter);
 
+// Global error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    message: err.message || 'An unexpected error occurred',
+    error: process.env.NODE_ENV === 'production' ? {} : err
+  });
+});
+
 export default app;

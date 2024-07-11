@@ -41,8 +41,9 @@ export default function Navbar() {
           <NavLink
             key={nanoid()}
             to={elm.link}
-            className="text-gray-800 hover:text-gray-900"
-            activeClassName="text-white"
+            className={({ isActive }) =>
+              isActive ? "text-white" : "text-gray-900 hover:text-black hover:scale-105 duration-300"
+            }
           >
             {elm.name}
           </NavLink>
