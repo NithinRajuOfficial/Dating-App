@@ -22,22 +22,25 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const userExist = await User.findOne({ googleId: profile.id });
+      try {
+        const userExist = await User.findOne({ googleId: profile.id });
 
-      if (userExist) {
-        throw new ApiError(400, "User already exist");
+        if (userExist) {
+          throw new ApiError(400, "User already exist");
+        }
+
+        const userData = new User({
+          googleId: profile.id,
+          userName: profile.displayName,
+          email: profile.emails[0].value,
+          contactNumber: "Not Verified",
+        });
+        await userData.save();
+
+        return done(null, userData);
+      } catch (error) {
+        return done(error, null);
       }
-
-      const userData = new User({
-        googleId: profile.id,
-        userName: profile.displayName,
-        email: profile.emails[0].value,
-        contactNumber: "Not Verified",
-        password: "",
-      });
-      await userData.save();
-
-      return done(null, profile);
     }
   )
 );
