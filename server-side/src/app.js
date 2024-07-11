@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import cookieParser from 'cookie-parser'
 import session from "express-session";
 import passport from "./config/passport.js";
 
@@ -30,6 +31,7 @@ app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // importing routes
 import userRouter from "./routes/userRouter.js";
