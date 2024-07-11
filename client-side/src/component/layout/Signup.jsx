@@ -2,11 +2,11 @@ import { Button } from "@material-tailwind/react";
 import { Formik, Form } from "formik";
 import { nanoid } from "nanoid";
 
-import InputTag from "../utils/InputTag";
-import { signupInputData } from "../constants";
-import { signupValidationSchema } from "../utils/validation";
-import signupApi from "../services/signupApi";
-import handleGoogleAuthentication from "../services/googleAuth";
+import InputTag from "../common/InputTag";
+import { signupInputData } from "../../constants";
+import { signupValidationSchema } from "../../utils/validation";
+import signupApi from "../../services/signupApi";
+import handleGoogleAuthentication from "../../services/googleAuth";
 
 export default function Signup() {
   return (
