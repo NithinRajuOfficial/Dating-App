@@ -46,10 +46,10 @@ const postSignup = asyncHandler(async (req, res) => {
     // sameSite: 'strict', // Prevent CSRF attacks
   });
 
-  console.log(accessToken,"+++++++", refreshToken)
   return res.json(
     new ApiResponse(201, createdUser, "Successfully registered user")
   );
 });
+
 
 export default postSignup;
