@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 
 import { navbarData } from "../../constants";
+import { openDialog } from "../../redux/slices/signupDialog";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -42,8 +45,15 @@ export default function Navbar() {
             key={nanoid()}
             to={elm.link}
             className={({ isActive }) =>
-              isActive ? "text-white" : "text-gray-900 hover:text-black hover:scale-105 duration-300"
+              isActive
+                ? "text-white"
+                : "text-gray-900 hover:text-black hover:scale-105 duration-300"
             }
+            onClick={()=>{
+              if(elm.name === "Signup"){
+                dispatch(openDialog())
+              }
+            }}
           >
             {elm.name}
           </NavLink>

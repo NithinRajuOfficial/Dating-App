@@ -1,18 +1,31 @@
-import { Button } from "@material-tailwind/react";
+import { Button, Dialog } from "@material-tailwind/react";
 import { Formik, Form } from "formik";
 import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
+import { IoCloseSharp } from "react-icons/io5";
 
 import InputTag from "../common/InputTag";
 import { signupInputData } from "../../constants";
 import { signupValidationSchema } from "../../utils/validation";
 import signupApi from "../../services/signupApi";
 import handleGoogleAuthentication from "../../services/googleAuth";
+import { closeDialog } from "../../redux/slices/signupDialog";
 
 export default function Signup() {
+  const dispatch = useDispatch();
+  const { isOpen } = useSelector((state) => state.dialog);
   return (
-    <section className="flex justify-center h-[100vh] p-5 sm:p-20">
+    <Dialog
+      size="xl"
+      open={isOpen}
+      animate={{
+        mount: { scale: 1, y: 0, transition: { duration: 0.3 } },
+        unmount: { scale: 0.9, y: -100, transition: { duration: 0.3 } },
+      }}
+      className="flex justify-center h-[100vh] p-5 sm:p-20 bg-transparent shadow-none"
+    >
       <div
-        className="w-full border-4 flex justify-center md:justify-end rounded-3xl"
+        className="w-full border-4 flex justify-end rounded-3xl "
         style={{
           backgroundImage: `url(/signupBg.jpg)`,
           backgroundSize: "cover",
@@ -28,7 +41,7 @@ export default function Signup() {
         >
           <Form className="lg:w-2/4 flex flex-col items-center justify-center sm:px-10 md:px-32 gap-3">
             <div className="text-center pb-2">
-              <h1 className="text-5xl font-black">WELCOME</h1>
+              <h1 className="text-5xl font-black text-black">WELCOME</h1>
               <p className="text-sm font-light">
                 Please enter the details to signup
               </p>
@@ -77,7 +90,11 @@ export default function Signup() {
             </Button>
           </Form>
         </Formik>
+        <IoCloseSharp
+          className="text-xl md:text-2xl mt-1 md:mr-2 md:mt-2 cursor-pointer hover:scale-125 duration-300 hover:text-red-700"
+          onClick={() => dispatch(closeDialog())}
+        />
       </div>
-    </section>
+    </Dialog>
   );
 }

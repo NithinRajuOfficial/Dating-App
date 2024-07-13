@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axiosInstance from "../../utils/axios";
 import { showError } from "../../utils/toastify";
+import { openDialog } from "../../redux/slices/signupDialog";
 
 export default function Profile() {
 
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
   useEffect(() => {
     (async () => {
       try {
@@ -17,6 +19,7 @@ export default function Profile() {
       } catch (error) {
         console.error("Profile call failed:", error);
         navigate('/signup')
+        dispatch(openDialog())
         showError(error.message)
       }
     })();
