@@ -29,7 +29,7 @@ export default function InputTag({ data }) {
               <MdErrorOutline className="text-xl text-red-500 hover:cursor-pointer hover:scale-105" />
             </div>
           </PopoverHandler>
-          <PopoverContent className="bg-white p-2 rounded-lg shadow-lg border border-gray-200">
+          <PopoverContent className="bg-white p-2 rounded-lg shadow-lg border border-gray-200 z-[9999]">
             <ErrorMessage
               name={data.name}
               component="div"

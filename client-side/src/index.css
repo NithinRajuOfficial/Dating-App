@@ -10,3 +10,8 @@
   .pending {
     opacity: 0.5;
   }
+
+  /* App.css or any global CSS file */
+.Toastify__toast-container {
+  z-index: 99999 !important; /* Ensure the z-index is higher than the dialog's z-index */
+}
