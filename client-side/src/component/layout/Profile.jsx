@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axiosInstance from "../../utils/axios";
 import { showError } from "../../utils/toastify";
-import { openDialog } from "../../redux/slices/signupDialog";
+import { toggleSignupDialog } from "../../redux/slices/signupDialog";
 
 export default function Profile() {
 
@@ -19,7 +19,7 @@ export default function Profile() {
       } catch (error) {
         console.error("Profile call failed:", error);
         navigate('/signup')
-        dispatch(openDialog())
+        dispatch(toggleSignupDialog())
         showError(error.message)
       }
     })();

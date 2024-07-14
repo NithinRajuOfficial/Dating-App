@@ -26,7 +26,7 @@ const postSignup = asyncHandler(async (req, res) => {
     password,
   });
 
-  const createdUser = await User.findById(userData._id).select("-password");
+  const createdUser = await User.findById(userData._id).select("-password -refreshToken");
 
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong on user registration");
@@ -43,7 +43,6 @@ const postSignup = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: true,
-    // sameSite: 'strict', // Prevent CSRF attacks
   });
 
   return res.json(

@@ -1,19 +1,36 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import signupDialog from "./slices/signupDialog";
+import loginDialog from "./slices/loginDialog";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, signupDialog);
-
+const persistedSignupReducer = persistReducer(persistConfig, signupDialog);
+const persistedLoginReducer = persistReducer(persistConfig, loginDialog);
 const store = configureStore({
   reducer: {
-    dialog: persistedReducer,
+    signupDialog: persistedSignupReducer,
+    loginDialog: persistedLoginReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);
