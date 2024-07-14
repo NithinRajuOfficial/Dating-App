@@ -1,19 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const signupDialogSlice = createSlice({
-  name: "dialog",
+  name: "signupDialog",
   initialState: {
-    isOpen: false,
+    isSignupDialogOpen: false,
   },
   reducers: {
-    openDialog: (state) => {
-      state.isOpen = true;
-    },
-    closeDialog: (state) => {
-      state.isOpen = false;
+    toggleSignupDialog: (state) => {
+      state.isSignupDialogOpen = !state.isSignupDialogOpen;
     },
   },
 });
 
-export const { openDialog, closeDialog } = signupDialogSlice.actions;
+export const { toggleSignupDialog } = signupDialogSlice.actions;
 export default signupDialogSlice.reducer;

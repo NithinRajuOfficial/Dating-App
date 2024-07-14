@@ -13,4 +13,9 @@ const signupInputData = [
   { name: "password", type: "password", label: "Password" },
 ];
 
-export { navbarData, signupInputData };
+const loginInputData = [
+  { name: "email", type: "email", label: "Email" },
+  { name: "password", type: "password", label: "Password" },
+];
+
+export { navbarData, signupInputData, loginInputData };

@@ -46,6 +46,10 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// password comparison process
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 // adding a method for creating a accessToken
 userSchema.methods.generateAccessToken = function () {
@@ -60,6 +64,7 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
 
 // adding a method for creating a refreshToken
 userSchema.methods.generateRefreshToken = function () {

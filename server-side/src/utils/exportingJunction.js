@@ -3,7 +3,8 @@ import ApiResponse from "./apiResponse.js";
 import ApiError from "./apiError.js";
 
 import renewalOfAccessToken from "../controllers/userController/renewalOfAccessToken.js";
-import postSignup from "../controllers/userController/signup.js";
+import postSignup from "../controllers/authController/signup.js";
+import postLogin from "../controllers/authController/login.js";
 
 export {
   asyncHandler,
@@ -11,4 +12,5 @@ export {
   ApiError,
   renewalOfAccessToken,
   postSignup,
+  postLogin
 };

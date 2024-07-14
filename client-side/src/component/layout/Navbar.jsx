@@ -7,7 +7,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 
 import { navbarData } from "../../constants";
-import { openDialog } from "../../redux/slices/signupDialog";
+import { toggleSignupDialog } from "../../redux/slices/signupDialog";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ export default function Navbar() {
             }
             onClick={()=>{
               if(elm.name === "Signup"){
-                dispatch(openDialog())
+                dispatch(toggleSignupDialog())
               }
             }}
           >

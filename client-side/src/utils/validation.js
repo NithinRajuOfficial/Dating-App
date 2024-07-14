@@ -19,4 +19,19 @@ const signupValidationSchema = {
   initialValues: { userName: "", email: "", contactNumber: "", password: "" },
 };
 
-export { signupValidationSchema };
+const loginValidationSchema = {
+  validationSchema: Yup.object({
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Enter a valid password"
+      )
+      .required("Password is required"),
+  }),
+  initialValues: { email: "", password: "" },
+};
+
+export { loginValidationSchema, signupValidationSchema };
