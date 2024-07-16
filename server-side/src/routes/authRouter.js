@@ -3,7 +3,13 @@ import {
   googleAuth,
   googleAuthCallback,
 } from "../controllers/authController/passport.js";
-import { postLogin, postSignup, renewalOfAccessToken } from "../utils/exportingJunction.js";
+import {
+  postLogin,
+  postSignup,
+  sendOtp,
+  verifyOtp,
+  renewalOfAccessToken,
+} from "../utils/exportingJunction.js";
 
 const router = Router();
 
@@ -18,6 +24,12 @@ router.route("/google").get(googleAuth);
 router.route("/google/callback").get(googleAuthCallback);
 
 // user login
-router.route("/login").post(postLogin)
+router.route("/login").post(postLogin);
+
+// user send-otp
+router.route("/send-otp").post(sendOtp);
+
+// user verify-otp
+router.route("/verify-otp").post(verifyOtp)
 
 export default router;

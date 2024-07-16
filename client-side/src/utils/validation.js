@@ -34,4 +34,13 @@ const loginValidationSchema = {
   initialValues: { email: "", password: "" },
 };
 
-export { loginValidationSchema, signupValidationSchema };
+const otpLoginValidationSchema = {
+  validationSchema: Yup.object({
+    contactNumber: Yup.string()
+    .matches(/^(\+\d{1,3}[- ]?)?\d{10}$/, "Contact number is invalid")
+    .required("Contact number is required"),
+  }),
+  initialValues: { contactNumber: "" },
+};
+
+export { loginValidationSchema, signupValidationSchema, otpLoginValidationSchema };
