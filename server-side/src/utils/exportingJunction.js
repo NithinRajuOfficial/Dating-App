@@ -5,6 +5,7 @@ import ApiError from "./apiError.js";
 import renewalOfAccessToken from "../controllers/userController/renewalOfAccessToken.js";
 import postSignup from "../controllers/authController/signup.js";
 import postLogin from "../controllers/authController/login.js";
+import { sendOtp, verifyOtp } from "../controllers/authController/otpLogin.js";
 
 export {
   asyncHandler,
@@ -12,5 +13,7 @@ export {
   ApiError,
   renewalOfAccessToken,
   postSignup,
-  postLogin
+  postLogin,
+  sendOtp,
+  verifyOtp,
 };

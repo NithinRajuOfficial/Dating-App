@@ -1,7 +1,7 @@
 import { Button, Dialog } from "@material-tailwind/react";
 import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 import { IoMdLogIn } from "react-icons/io";
 import { nanoid } from "nanoid";
@@ -12,8 +12,10 @@ import loginApi from "../../services/loginApi";
 import InputTag from "../common/InputTag";
 import { toggleLoginDialog } from "../../redux/slices/loginDialog";
 import { toggleSignupDialog } from "../../redux/slices/signupDialog";
+import { toggleOtpDialog } from "../../redux/slices/otpDialog";
 
 export default function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoginDialogOpen } = useSelector((state) => state.loginDialog);
   return (
@@ -37,15 +39,19 @@ export default function Login() {
         <Formik
           initialValues={loginValidationSchema.initialValues}
           validationSchema={loginValidationSchema.validationSchema}
-          onSubmit={(values) => {
-            loginApi(values);
+          onSubmit={async (values) => {
+            const response = await loginApi(values);
+            if (response === true) {
+              navigate("/");
+              dispatch(toggleLoginDialog());
+            }
           }}
         >
           <Form className="lg:w-2/4 flex flex-col items-center justify-center sm:px-10 md:px-32 gap-3">
             <div className="text-center pb-2">
               <h1 className="text-5xl font-black text-gray-900">WELCOME</h1>
               <p className="text-sm font-light">
-                Please enter the details to signup
+                Please enter the details to Login
               </p>
             </div>
 
@@ -85,11 +91,13 @@ export default function Login() {
               <hr className="border-white  w-full" />
             </div>
 
-            <Button>
-              <span className="flex items-center gap-2">
-                OTP Login <IoMdLogIn className="text-xl" />
-              </span>
-            </Button>
+            <Link to={"/otp-login"}>
+              <Button onClick={() => dispatch(toggleOtpDialog())}>
+                <span className="flex items-center gap-2">
+                  OTP Login <IoMdLogIn className="text-xl" />
+                </span>
+              </Button>
+            </Link>
           </Form>
         </Formik>
         <IoCloseSharp

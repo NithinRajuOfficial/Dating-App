@@ -8,6 +8,7 @@ const signupDialogSlice = createSlice({
   reducers: {
     toggleSignupDialog: (state) => {
       state.isSignupDialogOpen = !state.isSignupDialogOpen;
+      console.log(state.isSignupDialogOpen,"signup slice ----------")
     },
   },
 });
