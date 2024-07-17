@@ -16,7 +16,7 @@ async function otpSendApi(value, setPhoneError) {
     return true;
   } catch (error) {
     console.error("Otp Login api error:", error);
-    showError(error.message);
+    showError(error?.response?.data?.message);
   }
 }
 
@@ -32,7 +32,7 @@ async function otpVerifyApi(otp, value) {
     }
   } catch (error) {
     console.error("OTP Verification Error:", error);
-    showError(error.message);
+    showError(error?.response?.data?.message);
   }
 }
 

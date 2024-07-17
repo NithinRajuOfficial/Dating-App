@@ -1,5 +1,6 @@
 import twilio from "twilio";
 
+import {User} from "../../models/userModel.js"
 import ApiError from "../../utils/apiError.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 import ApiResponse from "../../utils/apiResponse.js";
@@ -14,6 +15,12 @@ const sendOtp = asyncHandler(async (req, res) => {
 
   if (!phoneNumber) {
     throw new ApiError(400, "Phone Number is required");
+  }
+
+  const isUser = await User.findOne({phoneNumber}).select("-password -refreshToken")
+
+  if(!isUser){
+    throw new ApiError(400, "No user exist")
   }
 
   await client.verify.v2
