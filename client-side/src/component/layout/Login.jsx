@@ -92,7 +92,12 @@ export default function Login() {
             </div>
 
             <Link to={"/otp-login"}>
-              <Button onClick={() => dispatch(toggleOtpDialog())}>
+              <Button
+                onClick={() => {
+                  dispatch(toggleOtpDialog());
+                  dispatch(toggleLoginDialog());
+                }}
+              >
                 <span className="flex items-center gap-2">
                   OTP Login <IoMdLogIn className="text-xl" />
                 </span>

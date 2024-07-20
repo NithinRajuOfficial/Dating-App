@@ -25,6 +25,8 @@ export default function OtpLogin() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const { isOtpDialogOpen } = useSelector((state) => state.otpDialog);
+  console.log(isOtpDialogOpen,"Login dialog...")
+
 
   const handlePhoneNumberSubmit = async () => {
     const response = await otpSendApi(value, setPhoneError);
