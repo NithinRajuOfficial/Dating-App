@@ -4,7 +4,7 @@ import ApiError from "../utils/apiError.js";
 export default async function generateAccessTokenAndRefreshToken(userId) {
   try {
     const user = await User.findById(userId);
-    console.log(user,"-=====")
+
     const accessToken = await user.generateAccessToken();
     const refreshToken = await user.generateRefreshToken();
 

@@ -2,10 +2,9 @@ import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-
 const userSchema = new Schema(
   {
-    googleId: { type: String, unique: true,  sparse: true  },
+    googleId: { type: String, unique: true, sparse: true },
     userName: {
       type: String,
       required: true,
@@ -26,14 +25,39 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: function() {
+      required: function () {
         return !this.googleId;
       },
       trim: true,
     },
-    refreshToken:{
+    dateOfBirth: {
+      type: Date,
+      trim: true,
+    },
+    hobbies: {
+      type: [String],
+    },
+    qualification:{
+      type: String,
+      trim: true
+    },
+    smokingHabits: {
+      type: Boolean,
+      trim: true
+    },
+    drinkingHabits: {
+      type: Boolean,
+      trim: true
+    },
+    proImg: {
+      type: String,
+    },
+    shortReel: {
       type: String
-    }
+    },
+    refreshToken: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -64,7 +88,6 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
-
 
 // adding a method for creating a refreshToken
 userSchema.methods.generateRefreshToken = function () {

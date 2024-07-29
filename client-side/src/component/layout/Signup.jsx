@@ -1,5 +1,5 @@
 import { Button, Dialog } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,13 +8,14 @@ import { IoCloseSharp } from "react-icons/io5";
 import InputTag from "../common/InputTag";
 import { signupInputData } from "../../constants";
 import { signupValidationSchema } from "../../utils/validation";
-import signupApi from "../../services/signupApi";
 import handleGoogleAuthentication from "../../services/googleAuth";
 import { toggleSignupDialog } from "../../redux/slices/signupDialog";
 import { toggleLoginDialog } from "../../redux/slices/loginDialog";
+import { toggleUserDataDialog } from "../../redux/slices/userDataDialog";
 
 export default function Signup() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { isSignupDialogOpen } = useSelector((state) => state.signupDialog);
   return (
     <Dialog
@@ -37,8 +38,12 @@ export default function Signup() {
         <Formik
           initialValues={signupValidationSchema.initialValues}
           validationSchema={signupValidationSchema.validationSchema}
-          onSubmit={(values) => {
-            signupApi(values);
+          onSubmit={async(values) => {
+         
+            navigate("/user-data", {state:{formData:values}})
+              dispatch(toggleSignupDialog()),
+              dispatch(toggleUserDataDialog())
+           
           }}
         >
           <Form className="lg:w-2/4 flex flex-col items-center justify-center sm:px-10 md:px-32 gap-3">
