@@ -18,4 +18,20 @@ const loginInputData = [
   { name: "password", type: "password", label: "Password" },
 ];
 
-export { navbarData, signupInputData, loginInputData };
+const userDataDialogInputSetOne = [
+  { name: "dateOfBirth", type: "date", label: "DOB" },
+];
+
+
+const userDataDialogInputSetTwo = [
+  { name: "proImg", type: "file", label: "Profile Image" },
+  { name: "shortReel", type: "file", label: "Short Reel" },
+];
+
+export {
+  navbarData,
+  signupInputData,
+  loginInputData,
+  userDataDialogInputSetOne,
+  userDataDialogInputSetTwo,
+};

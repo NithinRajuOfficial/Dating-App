@@ -15,7 +15,7 @@ export default function Layout() {
         const userData = JSON.parse(decodeURIComponent(user));
 
         localStorage.setItem("user", JSON.stringify(userData));
-        showSuccess("Signup Successfull")
+        showSuccess("Signup Successful")
       } catch (error) {
         console.error("Error parsing user data:", error);
       }

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { upload } from "../middlewares/multer.js";
 import {
   googleAuth,
   googleAuthCallback,
@@ -17,7 +18,9 @@ const router = Router();
 router.route("/refresh-token").post(renewalOfAccessToken);
 
 // user signup
-router.route("/signup").post(postSignup);
+router
+  .route("/signup")
+  .post(upload.fields([{ name: "proImg" }, { name: "shortReel" }]), postSignup);
 
 // user google authentication
 router.route("/google").get(googleAuth);
@@ -30,6 +33,6 @@ router.route("/login").post(postLogin);
 router.route("/send-otp").post(sendOtp);
 
 // user verify-otp
-router.route("/verify-otp").post(verifyOtp)
+router.route("/verify-otp").post(verifyOtp);
 
 export default router;
