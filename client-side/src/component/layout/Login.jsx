@@ -13,6 +13,7 @@ import InputTag from "../common/InputTag";
 import { toggleLoginDialog } from "../../redux/slices/loginDialog";
 import { toggleSignupDialog } from "../../redux/slices/signupDialog";
 import { toggleOtpDialog } from "../../redux/slices/otpDialog";
+import handleGoogleAuthentication from "../../services/googleAuth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -91,18 +92,37 @@ export default function Login() {
               <hr className="border-white  w-full" />
             </div>
 
-            <Link to={"/otp-login"}>
+            <div className="flex gap-5">
+              <Link to={"/otp-login"}>
+                <Button
+                  onClick={() => {
+                    dispatch(toggleOtpDialog());
+                    dispatch(toggleLoginDialog());
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    OTP Login <IoMdLogIn className="text-xl" />
+                  </span>
+                </Button>
+              </Link>
+
               <Button
+                size="sm"
+                variant="outlined"
+                color="blue-gray"
+                className="flex items-center gap-3 bg-gray-900"
                 onClick={() => {
-                  dispatch(toggleOtpDialog());
                   dispatch(toggleLoginDialog());
+                  handleGoogleAuthentication();
                 }}
               >
-                <span className="flex items-center gap-2">
-                  OTP Login <IoMdLogIn className="text-xl" />
-                </span>
+                <img
+                  src="https://docs.material-tailwind.com/icons/google.svg"
+                  alt="metamask"
+                  className="h-6 w-6"
+                />
               </Button>
-            </Link>
+            </div>
           </Form>
         </Formik>
         <IoCloseSharp

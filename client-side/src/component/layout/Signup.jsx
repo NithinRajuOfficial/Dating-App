@@ -15,7 +15,7 @@ import { toggleUserDataDialog } from "../../redux/slices/userDataDialog";
 
 export default function Signup() {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { isSignupDialogOpen } = useSelector((state) => state.signupDialog);
   return (
     <Dialog
@@ -38,12 +38,9 @@ export default function Signup() {
         <Formik
           initialValues={signupValidationSchema.initialValues}
           validationSchema={signupValidationSchema.validationSchema}
-          onSubmit={async(values) => {
-         
-            navigate("/user-data", {state:{formData:values}})
-              dispatch(toggleSignupDialog()),
-              dispatch(toggleUserDataDialog())
-           
+          onSubmit={async (values) => {
+            navigate("/user-data", { state: { formData: values } });
+            dispatch(toggleSignupDialog()), dispatch(toggleUserDataDialog());
           }}
         >
           <Form className="lg:w-2/4 flex flex-col items-center justify-center sm:px-10 md:px-32 gap-3">
@@ -67,10 +64,13 @@ export default function Signup() {
               >
                 Signup
               </Button>
-              <Link onClick={() =>{
-                dispatch(toggleLoginDialog())
-                dispatch(toggleSignupDialog())
-              }} to="/login" >
+              <Link
+                onClick={() => {
+                  dispatch(toggleLoginDialog());
+                  dispatch(toggleSignupDialog());
+                }}
+                to="/login"
+              >
                 <Button
                   variant="gradient"
                   size="sm"
@@ -92,7 +92,10 @@ export default function Signup() {
               variant="outlined"
               color="blue-gray"
               className="flex items-center gap-3 hover:bg-gray-100 hover:scale-110 duration-300"
-              onClick={handleGoogleAuthentication}
+              onClick={() => {
+                dispatch(toggleSignupDialog());
+                handleGoogleAuthentication();
+              }}
             >
               <img
                 src="https://docs.material-tailwind.com/icons/google.svg"
