@@ -7,11 +7,11 @@ import ApiError from "../utils/apiError.js";
 dotenv.config({ path: "./.env" });
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser((user, done) => {
+  done(null, user);
 });
 
 passport.use(
@@ -25,19 +25,16 @@ passport.use(
       try {
         const userExist = await User.findOne({ googleId: profile.id });
 
-        if (userExist) {
-          throw new ApiError(400, "User already exist");
+        if (!userExist) {
+          const userData = {
+            googleId: profile.id,
+            userName: profile.displayName,
+            email: profile.emails[0].value,
+            contactNumber: "Not Verified",
+          };
+          return done(null, userData);
         }
-
-        const userData = new User({
-          googleId: profile.id,
-          userName: profile.displayName,
-          email: profile.emails[0].value,
-          contactNumber: "Not Verified",
-        });
-        await userData.save();
-
-        return done(null, userData);
+        return done(null, profile);
       } catch (error) {
         return done(error, null);
       }

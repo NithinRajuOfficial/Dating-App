@@ -27,6 +27,7 @@ export default function UserDataDialogForm() {
   const { isUserHobbiesDialogOpen } = useSelector(
     (state) => state.userHobbiesDialog
   );
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * colors.length);

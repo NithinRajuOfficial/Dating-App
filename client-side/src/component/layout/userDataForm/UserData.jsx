@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, Dialog } from "@material-tailwind/react";
 import { Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,22 +13,21 @@ import Dropdown from "../../common/dropDown";
 import { toggleUserDataDialog } from "../../../redux/slices/userDataDialog";
 import { toggleUserHobbiesDialog } from "../../../redux/slices/userHobbiesDialog";
 import { useLocation, useNavigate } from "react-router-dom";
+import useUserData from "../../../hooks/userData/useUserData";
 
 export default function UserDataDialog() {
-  const navigate = useNavigate()
-  const location = useLocation();
-  const { formData } = location?.state || {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isUserDataDialogOpen } = useSelector((state) => state.userDataDialog);
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-
-  const handleFileChange = (event, setFile) => {
-    const file = event.currentTarget.files[0];
-    setFile(URL.createObjectURL(file));
-  };
-
+  const {
+    selectedImage,
+    setSelectedImage,
+    selectedVideo,
+    setSelectedVideo,
+    userGoogleData,
+    handleFileChange,
+  } = useUserData(dispatch, isUserDataDialogOpen);
+  let { formData } = useLocation()?.state || {};
   return (
     <Dialog
       size="lg"
@@ -44,10 +42,10 @@ export default function UserDataDialog() {
         initialValues={userDataDialogValidationSchema.initialValues}
         validationSchema={userDataDialogValidationSchema.validationSchema}
         onSubmit={(values) => {
-          const userData = {...formData, ...values}
-          navigate("/hobbies",{state:{userData}})
-          dispatch(toggleUserDataDialog())
-          dispatch(toggleUserHobbiesDialog())
+          const userData = { ...formData, ...userGoogleData, ...values };
+          navigate("/hobbies", { state: { userData } });
+          dispatch(toggleUserDataDialog());
+          dispatch(toggleUserHobbiesDialog());
         }}
       >
         {({ setFieldValue }) => (

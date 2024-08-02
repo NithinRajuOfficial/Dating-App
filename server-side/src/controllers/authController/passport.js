@@ -1,6 +1,5 @@
 import passport from "passport";
-
-import generateAccessTokenAndRefreshToken from "../../config/generateAccess&RefreshToken.js";
+import { User } from "../../models/userModel.js";
 
 export const googleAuth = async (req, res, next) => {
   await passport.authenticate("google", { scope: ["profile", "email"] })(
@@ -30,30 +29,20 @@ export const googleAuthCallback = (req, res, next) => {
           )}`
         );
       }
-      const sanitizedUser = {
-        googleId: user?.googleId,
-        userName: user?.userName,
-        email: user?.email,
-        contactNumber: user?.contactNumber,
-        _id: user?._id,
-      };
 
       try {
-        const { accessToken, refreshToken } =
-          await generateAccessTokenAndRefreshToken(user?._id);
+        if (await User.findOne({ googleId: user?.googleId })) {
+          return res.redirect("http://localhost:5173/");
+        }
 
-        res.cookie("accessToken", accessToken, {
-          httpOnly: true,
-          secure: true,
-        });
-
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: true,
-          // sameSite: 'strict', // Prevent CSRF attacks
-        });
+        const sanitizedUser = {
+          googleId: user?.googleId,
+          userName: user?.userName,
+          email: user?.email,
+          contactNumber: user?.contactNumber,
+        };
         return res.redirect(
-          `http://localhost:5173/?user=${encodeURIComponent(
+          `http://localhost:5173/user-data/?user=${encodeURIComponent(
             JSON.stringify(sanitizedUser)
           )}`
         );

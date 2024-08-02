@@ -25,7 +25,6 @@ export default function OtpLogin() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const { isOtpDialogOpen } = useSelector((state) => state.otpDialog);
-  console.log(isOtpDialogOpen,"Login dialog...")
 
 
   const handlePhoneNumberSubmit = async () => {
@@ -35,7 +34,6 @@ export default function OtpLogin() {
 
   // function to handle the otp change in the input
   const handleOtpChange = (val, index) => {
-    console.log(val, index);
     setOtp((prev) => {
       const currentOtp = [...prev];
       currentOtp[index] = val;

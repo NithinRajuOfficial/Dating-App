@@ -17,20 +17,27 @@ const postSignup = asyncHandler(async (req, res) => {
     smokingHabits,
     drinkingHabits,
     hobbies,
+    googleId,
   } = req.body;
 
   const { proImg, shortReel } = req.files;
+  const requiredFields = [
+    userName,
+    email,
+    contactNumber,
+    dateOfBirth,
+    qualification,
+    smokingHabits,
+    drinkingHabits,
+  ];
+
+  if (!googleId) {
+    console.log("-----")
+    requiredFields.push(password);
+  }
+
   if (
-    [
-      userName,
-      email,
-      contactNumber,
-      password,
-      dateOfBirth,
-      qualification,
-      smokingHabits,
-      drinkingHabits,
-    ].some((field) => field?.trim() === "") ||
+    requiredFields.some((field) => field?.trim() === "") ||
     [hobbies, proImg, shortReel].some((field) => field?.length === 0)
   ) {
     throw new ApiError(400, "All fields are required");
@@ -49,11 +56,10 @@ const postSignup = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Error uploading files");
   }
 
-  const userData = await User.create({
+  const userData = {
     userName,
     email,
     contactNumber,
-    password,
     dateOfBirth,
     qualification,
     smokingHabits,
@@ -61,9 +67,19 @@ const postSignup = asyncHandler(async (req, res) => {
     hobbies,
     proImg: avatar.url,
     shortReel: reel.url,
-  });
+  };
 
-  const createdUser = await User.findById(userData._id).select(
+  if(googleId){
+    userData.googleId = googleId
+  }
+
+  if (!googleId) {
+    userData.password = password;
+  }
+
+  const newUser = await User.create(userData);
+
+  const createdUser = await User.findById(newUser._id).select(
     "-password -refreshToken"
   );
 
