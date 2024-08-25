@@ -14,6 +14,7 @@ import { toggleLoginDialog } from "../../redux/slices/loginDialog";
 import { toggleSignupDialog } from "../../redux/slices/signupDialog";
 import { toggleOtpDialog } from "../../redux/slices/otpDialog";
 import handleGoogleAuthentication from "../../services/googleAuth";
+import { toggleUserLogStatus } from "../../redux/slices/userLoggedIn";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function Login() {
           onSubmit={async (values) => {
             const response = await loginApi(values);
             if (response === true) {
+              dispatch(toggleUserLogStatus())
               navigate("/");
               dispatch(toggleLoginDialog());
             }

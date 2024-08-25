@@ -15,6 +15,7 @@ import loginDialog from "./slices/loginDialog";
 import otpDialog from "./slices/otpDialog";
 import userDataDialog from "./slices/userDataDialog";
 import userHobbiesDialog from "./slices/userHobbiesDialog";
+import userLoggedIn from "./slices/userLoggedIn";
 
 const persistConfig = {
   key: "root",
@@ -24,8 +25,18 @@ const persistConfig = {
 const persistedSignupReducer = persistReducer(persistConfig, signupDialog);
 const persistedLoginReducer = persistReducer(persistConfig, loginDialog);
 const persistedOtpReducer = persistReducer(persistConfig, otpDialog);
-const persistedUserDataDialogReducer = persistReducer(persistConfig,userDataDialog)
-const persistedUserHobbiesReducer = persistReducer(persistConfig, userHobbiesDialog);
+const persistedUserDataDialogReducer = persistReducer(
+  persistConfig,
+  userDataDialog
+);
+const persistedUserHobbiesReducer = persistReducer(
+  persistConfig,
+  userHobbiesDialog
+);
+const persistedUserLogStatusReducer = persistReducer(
+  persistConfig,
+  userLoggedIn
+);
 
 const store = configureStore({
   reducer: {
@@ -34,6 +45,7 @@ const store = configureStore({
     otpDialog: persistedOtpReducer,
     userDataDialog: persistedUserDataDialogReducer,
     userHobbiesDialog: persistedUserHobbiesReducer,
+    userLogStatus: persistedUserLogStatusReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
