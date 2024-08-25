@@ -1,10 +1,61 @@
-const navbarData = [
-  { name: "Profile", link: "/profile" },
-  { name: "Matches", link: "/matches" },
-  { name: "Messages", link: "/messages" },
-  { name: "Settings", link: "/settings" },
-  { name: "Signup", link: "/signup" },
-];
+import {
+  UserCircleIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon,
+  HeartIcon,
+  InformationCircleIcon 
+} from "@heroicons/react/24/solid";
+
+const navbarData = {
+  navListItems : [
+    {
+      label: "Home",
+      link: "/",
+      color:"blue-gray",
+      icon: UserCircleIcon,
+    },
+    {
+      label: "About",
+      link: "/about",
+      color:"blue-gray",
+      icon: InformationCircleIcon ,
+    },
+    {
+      label: "Matches",
+      link: "/matches",
+      color:"red",
+      icon: HeartIcon,
+    },
+  ],
+
+   profileMenuItems : [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+    },
+    {
+      label: "Inbox",
+      icon: InboxArrowDownIcon,
+    },
+    {
+      label: "Help",
+      icon: LifebuoyIcon,
+    },
+    {
+      label: "Settings",
+      icon: Cog6ToothIcon,
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+    },
+  ]
+}
+
+
+
 
 const signupInputData = [
   { name: "userName", type: "text", label: "Username" },

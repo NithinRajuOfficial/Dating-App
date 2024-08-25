@@ -12,6 +12,7 @@ import handleGoogleAuthentication from "../../services/googleAuth";
 import { toggleSignupDialog } from "../../redux/slices/signupDialog";
 import { toggleLoginDialog } from "../../redux/slices/loginDialog";
 import { toggleUserDataDialog } from "../../redux/slices/userDataDialog";
+import { toggleUserLogStatus } from "../../redux/slices/userLoggedIn";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -40,7 +41,9 @@ export default function Signup() {
           validationSchema={signupValidationSchema.validationSchema}
           onSubmit={async (values) => {
             navigate("/user-data", { state: { formData: values } });
-            dispatch(toggleSignupDialog()), dispatch(toggleUserDataDialog());
+            dispatch(toggleSignupDialog()),
+              dispatch(toggleUserDataDialog()),
+              dispatch(toggleUserLogStatus());
           }}
         >
           <Form className="lg:w-2/4 flex flex-col items-center justify-center sm:px-10 md:px-32 gap-3">

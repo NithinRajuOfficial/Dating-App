@@ -1,13 +1,33 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import cookieParser from 'cookie-parser'
+import helmet from "helmet";
+import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "./config/passport.js";
 
 dotenv.config({ path: "./.env" });
 
 const app = express();
+
+app.use(helmet());
+
+// Custom Content Security Policy using Helmet
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      defaultSrc: ["'self'"], // Only allow resources from the same origin
+      scriptSrc: ["'self'", process.env.CORS_ORIGIN], // Allow scripts from the same origin and a trusted CDN
+      styleSrc: ["'self'", process.env.CORS_ORIGIN], // Allow styles from the same origin and a trusted CDN
+      imgSrc: ["'self'", process.env.CORS_ORIGIN], // Allow images from the same origin and an image hosting service
+      connectSrc: ["'self'", process.env.CORS_ORIGIN], // Allow AJAX requests to the same origin and a trusted API
+      fontSrc: ["'self'", process.env.CORS_ORIGIN], // Allow fonts from the same origin and Google Fonts
+      objectSrc: ["'none'"], // Disallow <object>, <embed>, or <applet> elements
+      upgradeInsecureRequests: [], // Automatically upgrade HTTP to HTTPS
+    },
+  })
+);
 
 app.use(
   cors({
@@ -44,8 +64,8 @@ app.use("/api/auth/", authRouter);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
-    message: err.message || 'An unexpected error occurred',
-    error: process.env.NODE_ENV === 'production' ? {} : err
+    message: err.message || "An unexpected error occurred",
+    error: process.env.NODE_ENV === "production" ? {} : err,
   });
 });
 
